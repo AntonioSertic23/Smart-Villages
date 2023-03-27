@@ -1,0 +1,131 @@
+﻿@inherits OpenActiveEndedMoreDetailsDialogBase
+
+<MudDialog>
+    <DialogContent>
+        @if (!IsForCustomerEnded)
+        {
+            <MudSimpleTable Class="mt-4" Hover="true" Dense="true" FixedHeader="true">
+                <thead>
+                    <tr>
+                        <th style="width: 40%">Product</th>
+                        <th class="text-center" style="width: 30%">From</th>
+                        <th class="text-center" style="width: 15%">Quantity</th>
+                        <th class="text-center" style="width: 15%">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Order.CartItems.Count; i++)
+                    {
+                        int locale = i;
+                        <tr style="@(Order.CartItems[i].Product.User.Id == User.Id ? "background-color: lightgreen" : "")">
+                            <td>@Order.CartItems[i].Product.Title</td>
+                            <td class="text-center">@Order.CartItems[i].Product.User.FirstName @Order.CartItems[i].Product.User.LastName</td>
+                            <td class="text-center">@Order.CartItems[i].Quantity</td>
+                            <td class="text-center">@Order.CartItems[i].Price$</td>
+                        </tr>
+                    }
+                </tbody>
+            </MudSimpleTable>
+
+            <div class="row m-0">
+                <div class="col-6">
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Buyer: </span>@Order.Buyer.FirstName @Order.Buyer.LastName</p>
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Ordered from: </span>@Order.FromDate.ToString("dd/MM/yyyy")</p>
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Ordered for: </span>@Order.ToDate.ToString("dd/MM/yyyy")</p>
+                </div>
+                <div class="col-6">
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Place: </span>@Order.Buyer.Place.Name</p>
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Postal code: </span>@Order.Buyer.Place.PostalCode</p>
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Address: </span>@Order.Buyer.Address</p>
+                </div>
+            </div>
+
+            <div class="row m-0">
+                <div class="col-12">
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Description: </span>@Order.Description</p>
+                    <p class="mt-5"><span style="font-weight: 500; font-size: 18px;">Price: </span>@MyPrice$</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row m-0 mr-5" style="padding: 16px 24px;">
+                <div class="col-3">
+                    <p class="m-0" style="font-size: 20px; font-weight: 500;">Product</p>
+                </div>
+                <div class="col-3 text-center">
+                    <p class="m-0" style="font-size: 20px; font-weight: 500;">From</p>
+                </div>
+                <div class="col-3 text-center">
+                    <p class="m-0" style="font-size: 20px; font-weight: 500;">Quantity</p>
+                </div>
+                <div class="col-3 text-center">
+                    <p class="m-0" style="font-size: 20px; font-weight: 500;">Price</p>
+                </div>
+            </div>
+            <MudExpansionPanels MultiExpansion="false">
+                @for (var i = 0; i < Order.CartItems.Count(); i++)
+                {
+                    var locale = i;
+                    <div @onclick="() => Fill(Order.CartItems[locale].Product.Id)">
+                        <MudExpansionPanel>
+                            <TitleContent>
+                                <div class="row m-0">
+                                    <div class="col-3">
+                                        <p>@Order.CartItems[locale].Product.Title</p>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <p>@Order.CartItems[locale].Product.User.FirstName @Order.CartItems[locale].Product.User.LastName</p>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <p>@Order.CartItems[locale].Quantity</p>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <p>@Order.CartItems[locale].Price$</p>
+                                    </div>
+                                </div>
+                            </TitleContent>
+
+                            <ChildContent>
+
+                                <div class="row m-0">
+                                    <div class="col-3 d-flex align-items-center">
+                                        <div class="d-flex flex-column align-center">
+                                            <MudRating @bind-SelectedValue="SelectedVal" Size="Size.Large" HoveredValueChanged="HandleHoveredValueChanged" />
+                                            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <MudTextField T="string" Label="Comment" Variant="Variant.Outlined" @bind-Text="Comment" Lines="3" />
+                                    </div>
+                                    @if (!isEdit)
+                                    {
+                                        <div class="col-1 d-flex align-items-center">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Send" Disabled="@(SelectedVal == 0 || Comment == "")" Size="Size.Large" Color="Color.Success" OnClick="() => RateAndComment(Order.CartItems[locale].Product)"></MudIconButton>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-1">
+                                            <MudIconButton Icon="@Icons.Material.Filled.Send" Disabled="@(SelectedVal == 0 || Comment == "")" Size="Size.Medium" Color="Color.Success" OnClick="() => RateAndComment(Order.CartItems[locale].Product)"></MudIconButton>
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Disabled="false" Size="Size.Medium" Color="Color.Error" OnClick="DeleteRate"></MudIconButton>
+                                        </div>
+                                    }
+                                </div>
+
+                            </ChildContent>
+                        </MudExpansionPanel>
+                    </div>
+                }
+            </MudExpansionPanels>
+
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Close</MudButton>
+        @if (!Ordered)
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">Set as ordered</MudButton>
+        }
+    </DialogActions>
+</MudDialog>

@@ -1,0 +1,112 @@
+﻿@page "/profile/{id}"
+@inherits ProfileBase
+@layout MainLayout
+
+<div class="profile_container row m-0" style="height: calc(100vh - 56px) !important;">
+    
+    <div class="profile_container_left col-lg-4 col-xxl-3 container-fluid py-0 px-5" style="border-right: 1px solid #d6d5d5;">
+
+        <div class="text-center py-5" style="height: 300px; background-color: white;">
+            <img src="@(User.UserImage != null ? User.UserImage.Image : "/img/default.png")" class="rounded img-fluid h-100" alt="User Profile Picture">
+            @if (ProfileOfSignInUser)
+            {
+                if (EditingProfileImage)
+                {
+                    <div class="upload-profile-image" style="margin-top: -28px;">
+                        <MudIconButton Class="mr-5" Icon="@Icons.Filled.Close" Style="background-color: lightcoral;" OnClick="CancelUpdateingImage" />
+                        <MudIconButton Class="ml-5" Icon="@Icons.Filled.Check" Style="background-color: lightgreen;" OnClick="DoUpdateingImage" />
+                    </div>
+                }
+                else
+                {
+                    <div class="upload-profile-image" style="margin-top: -28px;">
+                        <InputFile id="fileInput" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png" />
+                        <MudIconButton HtmlTag="label" Icon="@Icons.Filled.PhotoCamera" for="fileInput" Style="background-color: lightgreen;" />
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="mt-2 d-flex justify-content-center w-100">
+            <p class="m-0" style=" font-size: 28px;">@User.FirstName @User.LastName</p>
+        </div>
+        <hr />
+        @if (IsFarmerSignIn)
+        {
+            <div class="px-5">
+                <div class="rating_container" style="display: flex; flex-direction: column; align-items: center;">
+                    <p class="m-0" style="font-size: 24px; font-family: 'Dancing Script', cursive;">Rating</p>
+                    <MudRating ReadOnly="true" SelectedValue="(int)Math.Round(UserProfileStat.Rate, 0)" Size="Size.Large" />
+                    <h3>@UserProfileStat.Rate.ToString("0.0")</h3>
+                </div>
+                <div class="other_info mx-5 mt-5 px-5" style="font-size: 18px;">
+                    <p>Orders: <b>@UserProfileStat.Orders</b></p>
+                    <p>Products: <b>@UserProfileStat.Products</b></p>
+                </div>
+            </div>
+            <img style="height: 310px; position: absolute; margin-left: 50px; bottom: 0; margin-bottom: 15px;" src="./img/illustrations/DarkWatering.png" />
+            <hr style="margin-top: 270px;" />
+        }
+        else
+        {
+            <img style="height: 310px; position: absolute; margin-left: 50px; bottom: 0; margin-bottom: 20px;" src="./img/illustrations/DarkNotifications.png" />
+            <hr style="margin-top: 483px;" />
+        }
+        <div style="font-size: 20px; text-align: center;">
+            <p style="font-family: 'Dancing Script', cursive;">Member since <b style="font-family: 'Dancing Script', cursive;">@UserProfileStat.Year</b></p>
+        </div>
+
+    </div>
+
+    <div class="profile_container_right col-lg-8 col-xxl-9 p-0">
+
+        <div class="profile_header pl-5" style="height: 80px;display: flex;align-items: center;">
+            <h3 class="ml-5 mb-0 pl-5" style="font-size: 32px;font-weight: 400;">Profile</h3>
+        </div>
+
+        <MudTabs Style="z-index: 0;" Centered="true" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            <MudTabPanel Text="Profile details">
+                @if (Loaded)
+                {
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Titula: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.UserType.UserTypeName</p>
+                    </div>
+                    <div class="@(User.Bio != null ? "d-flex align-items-center" : "d-none")">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;align-self:flex-start">Biography: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Bio</p>
+                    </div>
+                    <div class="@(User.Sex != null ? "d-flex align-items-center" : "d-none")">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Sex: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Sex</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Birth date: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.BirthDate?.ToString("dd/MM/yyyy")</p>
+                    </div>
+                }
+            </MudTabPanel>
+
+            <MudTabPanel Text="Contact details">
+                @if (Loaded)
+                {
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Email: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Email</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">OIB: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.OIB</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Postal code: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Place.PostalCode</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">City: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Place.Name</p>
+                    </div>
+                    <div class="@(User.Address != null ? "d-flex align-items-center" : "d-none")">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Address: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Address</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <p class="m-0" style="font-weight: 400; font-size: 32px; margin: 10px !important;">Number: </p><p class="m-0" style="font-size: 32px; font-weight: 300;">@User.Number</p>
+                    </div>
+                }
+            </MudTabPanel>
+        </MudTabs>
+
+    </div>
+</div>

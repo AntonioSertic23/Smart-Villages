@@ -1,0 +1,55 @@
+﻿@layout UserSignLayout
+@page "/signin"
+@inherits SignInBase
+
+<style>
+    @@media only screen and (min-width: 576px) {
+        form {
+            width: 492px;
+        }
+    }
+    @@media only screen and (max-width: 576px) {
+        form {
+            width: 100%;
+        }
+    }
+</style>
+
+<p class="naslov">Sign in</p>
+
+<EditForm Model="@UserModel" OnInvalidSubmit="HandleInvalidSubmit" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <MudCard Elevation="10">
+        <MudCardContent>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Email)" @bind-Value="UserModel.Email" Variant="Variant.Outlined" Label="Email" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Password)" @bind-Value="UserModel.Password" Variant="Variant.Outlined" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowHidePass" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.SecretCode)" @bind-Value="UserModel.SecretCode" Variant="Variant.Outlined" Label="Secret code" InputType="InputType.Text" />
+                </MudItem>
+            </MudGrid>
+
+        </MudCardContent>
+
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
+        </MudCardActions>
+
+    </MudCard>
+</EditForm>
+
+<div class="mt-5">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenSignUp">Sign up</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Previouse">Go back</MudButton>
+</div>

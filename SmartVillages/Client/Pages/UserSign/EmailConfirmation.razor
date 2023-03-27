@@ -1,0 +1,24 @@
+﻿@page "/emailconfirmation/{code}/{oib}"
+@inherits EmailConfirmationBase
+
+<div class="text-center m-5">
+    <h3 style="font-size: 50px;">EmailConfirmation</h3>
+    @if (IsValid)
+    {
+        <p class="m-5 mb-0" style=" font-size: 25px;">@Message</p>
+    }
+    else
+    {
+        <p class="m-5 mb-0" style=" font-size: 25px;">Validateing, please wait..</p>
+        <div class="w-100 h-100 d-flex align-center justify-content-center">
+            <div class="lds-facebook">
+                <div>
+                </div>
+                <div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,18 @@
+﻿@inherits AddToCartDialogBase
+
+<MudDialog>
+    <DialogContent>
+        <div class="row">
+            <div class="col-10">
+                <MudNumericField @bind-Value="Weight" T="float" TextChanged="NewPrice" Label="Weight" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="Kg" AdornmentColor="Color.Primary" Max="MaxValue" />
+            </div>
+            <div class="col-2 d-flex align-items-center justify-content-center">
+                <MudText Typo="Typo.h5">@FinalPrice$</MudText>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddToCart">Ok</MudButton>
+    </DialogActions>
+</MudDialog>

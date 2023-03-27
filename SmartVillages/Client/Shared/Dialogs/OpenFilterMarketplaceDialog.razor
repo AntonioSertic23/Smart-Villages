@@ -1,0 +1,65 @@
+﻿@inherits OpenFilterMarketplaceDialogBase
+
+<MudDialog>
+    <DialogContent>
+
+        <MudGrid Class="px-3 mt-0 mb-5">
+            <MudItem xs="12" sm="4" md="3">
+                <MudSelect T="string" Label="Category" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.Name" SelectedValuesChanged="() => Sort(1)">
+                    @foreach (var catregory in Categories)
+                    {
+                        <MudSelectItem T="string" Value="catregory" />
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="4" md="3">
+                <MudSelect T="string" Label="SubCategory 1" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.SubCategoryOne" SelectedValuesChanged="() => Sort(2)">
+                    @foreach (var catregory in SubCategoriesOne)
+                    {
+                        <MudSelectItem T="string" Value="catregory" />
+                    }
+                </MudSelect>
+            </MudItem>
+
+            <MudItem xs="12" sm="4" md="3">
+                <MudSelect T="string" Label="SubCategory 2" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.SubCategoryTwo" SelectedValuesChanged="() => Sort(3)">
+                    @foreach (var catregory in SubCategoriesTwo)
+                    {
+                        <MudSelectItem T="string" Value="catregory" />
+                    }
+                </MudSelect>
+            </MudItem>
+
+            <MudItem xs="12" sm="4" md="3">
+                <MudSelect T="string" Label="Species" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.Species" SelectedValuesChanged="() => Sort(4)">
+                    @foreach (var catregory in Species)
+                    {
+                        <MudSelectItem T="string" Value="catregory" />
+                    }
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+
+        <div class="row m-0">
+            <div class="col-6">
+                <MudTextField For="@(() => FilterProducts.Title)" @bind-Value="FilterProducts.Title" Class="m-0" Label="Title" Variant="Variant.Outlined"></MudTextField>
+            </div>
+            <div class="col-6">
+                <MudGrid>
+                    <MudItem sm="12" md="6">
+                        <MudTextField For="@(() => FilterProducts.PriceMin)" @bind-Value="FilterProducts.PriceMin" Class="m-0" Label="Min Price" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" AdornmentColor="Color.Warning" />
+                    </MudItem>
+                    <MudItem sm="12" md="6">
+                        <MudTextField For="@(() => FilterProducts.PriceMax)" @bind-Value="FilterProducts.PriceMax" Class="m-0" Label="Max Price" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" AdornmentColor="Color.Warning" />
+                    </MudItem>
+                </MudGrid>
+            </div>
+            <MudSwitch T="bool" @bind-Checked="FilterProducts.Eco" Class="mt-5" Label="Eco" Color="Color.Success" />
+        </div>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="Cancel">Close</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit">Filter</MudButton>
+    </DialogActions>
+</MudDialog>

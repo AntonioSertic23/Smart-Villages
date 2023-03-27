@@ -1,0 +1,206 @@
+﻿@layout MainLayout
+@inherits MyOrdersBase
+
+@if (!IsFarmer)
+{
+    <MudTabs Elevation="0" Rounded="true" Centered="true">
+
+        <MudTabPanel Text="My Orders">
+            <MudPaper Class="pa-16 m-auto mt-3" Style="width: 80vw;" Elevation="10">
+                <MudSimpleTable Style="overflow-x: auto;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Products</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">View more</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < MyOrders.Count; i++)
+                        {
+                            int locale = i;
+                            int num = i + 1;
+                            <tr>
+                                <td>@num.</td>
+                                <td>@MyOrders[i].FromDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (MyOrders[i].CartItems != null)
+                                    {
+                                        string titles = "";
+                                        for (var j = 0; j < MyOrders[i].CartItems.Count(); j++)
+                                        {
+                                            if (j + 1 != MyOrders[i].CartItems.Count())
+                                            {
+                                                titles += MyOrders[i].CartItems[j].Product.Title + ", ";
+                                            }
+                                            else
+                                            {
+                                                titles += MyOrders[i].CartItems[j].Product.Title;
+                                            }
+                                        }
+                                        @titles
+                                    }
+                                </td>
+                                <td class="text-center">@MyOrders[i].Price$</td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenDialog(MyOrders[locale])" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudTabPanel>
+
+        <MudTabPanel Text="Ended Orders">
+            <MudPaper Class="pa-16 m-auto mt-3" Style="width: 80vw;" Elevation="10">
+                <MudSimpleTable Style="overflow-x: auto;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date from</th>
+                            <th>Date for</th>
+                            <th>Buyer</th>
+                            <th>Place & Address</th>
+                            <th class="text-center">View more</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < EndedOrders.Count; i++)
+                        {
+                            int locale = i;
+                            int num = i + 1;
+                            <tr>
+                                <td>@num.</td>
+                                <td>@EndedOrders[i].FromDate.ToString("dd/MM/yyyy")</td>
+                                <td>@EndedOrders[i].ToDate.ToString("dd/MM/yyyy")</td>
+                                <td>@EndedOrders[i].Buyer.FirstName @EndedOrders[i].Buyer.LastName</td>
+                                <td>@EndedOrders[i].Buyer.Place.Name, @EndedOrders[i].Buyer.Address</td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenActiveEndedDialog(EndedOrders[locale], true)" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudTabPanel>
+
+    </MudTabs>
+}
+else
+{
+    <MudTabs Elevation="0" Rounded="true" Centered="true">
+
+        <MudTabPanel Text="Active Orders">
+            <MudPaper Class="pa-16 m-auto mt-3" Style="width: 80vw;" Elevation="10">
+                <MudSimpleTable Style="overflow-x: auto;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date from</th>
+                            <th>Date for</th>
+                            <th>Buyer</th>
+                            <th>Place & Address</th>
+                            <th class="text-center">View more</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < ActiveOrders.Count; i++)
+                        {
+                            int locale = i;
+                            int num = i + 1;
+                            <tr>
+                                <td>@num.</td>
+                                <td>@ActiveOrders[i].FromDate.ToString("dd/MM/yyyy")</td>
+                                <td>@ActiveOrders[i].ToDate.ToString("dd/MM/yyyy")</td>
+                                <td>@ActiveOrders[i].Buyer.FirstName @ActiveOrders[i].Buyer.LastName</td>
+                                <td>@ActiveOrders[i].Buyer.Place.Name, @ActiveOrders[i].Buyer.Address</td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenActiveEndedDialog(ActiveOrders[locale])" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudTabPanel>
+
+        <MudTabPanel Text="Ended Orders">
+            <MudPaper Class="pa-16 m-auto mt-3" Style="width: 80vw;" Elevation="10">
+                <MudSimpleTable Style="overflow-x: auto;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date from</th>
+                            <th>Date for</th>
+                            <th>Buyer</th>
+                            <th>Place & Address</th>
+                            <th class="text-center">View more</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < EndedOrders.Count; i++)
+                        {
+                            int locale = i;
+                            int num = i + 1;
+                            <tr>
+                                <td>@num.</td>
+                                <td>@EndedOrders[i].FromDate.ToString("dd/MM/yyyy")</td>
+                                <td>@EndedOrders[i].ToDate.ToString("dd/MM/yyyy")</td>
+                                <td>@EndedOrders[i].Buyer.FirstName @EndedOrders[i].Buyer.LastName</td>
+                                <td>@EndedOrders[i].Buyer.Place.Name, @EndedOrders[i].Buyer.Address</td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenActiveEndedDialog(EndedOrders[locale])" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudTabPanel>
+
+        <MudTabPanel Text="My Orders">
+            <MudPaper Class="pa-16 m-auto mt-3" Style="width: 80vw;" Elevation="10">
+                <MudSimpleTable Style="overflow-x: auto;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Products</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">View more</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < MyOrders.Count; i++)
+                        {
+                            int locale = i;
+                            int num = i + 1;
+                            <tr>
+                                <td>@num.</td>
+                                <td>@MyOrders[i].FromDate.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (MyOrders[i].CartItems != null)
+                                    {
+                                        string titles = "";
+                                        for (var j = 0; j < MyOrders[i].CartItems.Count(); j++)
+                                        {
+                                            if (j + 1 != MyOrders[i].CartItems.Count())
+                                            {
+                                                titles += MyOrders[i].CartItems[j].Product.Title + ", ";
+                                            }
+                                            else
+                                            {
+                                                titles += MyOrders[i].CartItems[j].Product.Title;
+                                            }
+                                        }
+                                        @titles
+                                    }
+                                </td>
+                                <td class="text-center">@MyOrders[i].Price$</td>
+                                <td class="text-center"><MudIconButton Icon="@Icons.Material.Filled.Visibility" Color="Color.Primary" OnClick="() => OpenDialog(MyOrders[locale])" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudPaper>
+        </MudTabPanel>
+
+    </MudTabs>
+}
+

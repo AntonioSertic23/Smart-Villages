@@ -1,0 +1,84 @@
+﻿@layout UserSignLayout
+@page "/signup"
+@inherits SignUpBase
+
+<p class="naslov">Sign up</p>
+
+<EditForm Model="@UserModel" OnInvalidSubmit="HandleInvalidSubmit" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <MudCard Style="max-width: 492px;" Elevation="10">
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField For="@(() => UserModel.FirstName)" @bind-Value="UserModel.FirstName" Variant="Variant.Outlined" Label="First name" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField For="@(() => UserModel.LastName)" @bind-Value="UserModel.LastName" Variant="Variant.Outlined" Label="Last name" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Email)" @bind-Value="UserModel.Email" Variant="Variant.Outlined" Label="Email" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Password)" @bind-Value="UserModel.Password" Variant="Variant.Outlined" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowHidePass" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField For="@(() => UserModel.Number)" @bind-Value="UserModel.Number" Variant="Variant.Outlined" Label="Number" InputType="InputType.Number" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker DateFormat="dd/MM/yyyy" For="@(() => UserModel.BirthDate)" @bind-Date="UserModel.BirthDate" Label="Birth date" OpenTo="OpenTo.Year" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.OIB)" @bind-Value="UserModel.OIB" Variant="Variant.Outlined" Label="OIB" InputType="InputType.Number" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudSelect Variant="Variant.Outlined" Label="City" Text="@UserModel.Place.Name" @bind-Value="UserModel.Place">
+                        @foreach (var place in Places)
+                        {
+                            <MudSelectItem Value="@place">@place.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField For="@(() => UserModel.Place.PostalCode)" Disabled="true" @bind-Value="UserModel.Place.PostalCode" Variant="Variant.Outlined" Label="Postal code" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField For="@(() => UserModel.Address)" @bind-Value="UserModel.Address" Variant="Variant.Outlined" Label="Address" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudCheckBox For="@(() => UserModel.TermsAndConditions)" @bind-Checked="UserModel.TermsAndConditions" T="bool" Class="ml-n2" Label="I agree to the terms and conditions*" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+        </MudCardActions>
+
+    </MudCard>
+</EditForm>
+
+<div class="mt-5">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenSignIn">Sign in</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="GoBack">Go back</MudButton>
+</div>

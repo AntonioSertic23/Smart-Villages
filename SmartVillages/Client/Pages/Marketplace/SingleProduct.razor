@@ -1,0 +1,110 @@
+﻿@layout MainLayout
+@inherits SingleProductBase
+
+<div class="row m-3" style="height: calc(100vh - 136px - 2rem);overflow: scroll;">
+
+    <div class="col p-4">
+        <div class="d-flex">
+            <img class="w-100" src="@(Product.ProductImage != null ? Product.ProductImage.Image : "")" style="border-radius: 25px;">
+            @*
+            <div class="d-flex" style="width: 50px; height: 50px; background-color: white; border-radius: 15px; float: right; margin-left: -70px; margin-top: 20px;justify-content: center;">
+                <MudIconButton Icon="fas fa-heart" Size="Size.Medium" Color="Color.Secondary"></MudIconButton>
+            </div>
+            *@
+        </div>
+    </div>
+
+    <div class="col p-4 pb-0">
+        <div class="row">
+            <h1 class="col-8">@Product.Title</h1>
+            <div class="col-4" style="max-height: 40px;">
+                @if (Product.User.Id == User.Id)
+                {
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="Edit">Edit</MudButton>
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="Delete">Delete</MudButton>
+                }
+                else
+                {
+                    @if (!Addedornot)
+                    {
+                        <MudButton FullWidth="true" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.AddShoppingCart" Color="Color.Success" OnClick="OpenAddToChartDialog">Add to Cart</MudButton>
+                    }
+                    else
+                    {
+                        <MudButton FullWidth="true" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.RemoveShoppingCart" Color="Color.Error" OnClick="RemoveFromCart">Remove from Cart</MudButton>
+                    }
+                }
+            </div>
+        </div>
+        <hr />
+        <div class="d-flex">
+            <div class="image p-1">
+                <MudAvatar Image="@(Product.User.UserImage != null ? Product.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+            </div>
+            <div class="px-3" style="display: flex; flex-direction: column; justify-content: center;">
+                <h4 class="author_name m-0">@Product.User.FirstName @Product.User.LastName</h4>
+                <p class="author_last_message m-0 text-muted">@Product.User.Place.Name / @(Product.User.Address != null ? Product.User.Address : "")</p>
+            </div>
+            <div class="ml-auto" style="display: flex; flex-direction: column; justify-content: center;">
+                <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Medium" Dense="true" Direction="Direction.Left" OffsetX="true">
+                    <MudMenuItem Link="@LinkToProfile">Visit profile</MudMenuItem>
+                    <MudMenuItem Link="@LinkToMessages">Send message</MudMenuItem>
+                </MudMenu>
+            </div>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-between align-items-center px-5">
+            <div class="d-flex align-items-center">
+                <p style="font-size: 24px;" class="m-0">Remaining: </p>
+                <p class="m-0" style="font-weight: 500;font-size: 28px;">@Product.Quantity</p>
+                <p class="text-muted m-0">/Kg</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <p style="font-size: 24px;" class="m-0">Price: </p>
+                <p class="m-0" style="font-weight: 500;font-size: 28px;">@Product.Price$</p>
+            </div>
+            <div class="d-flex align-items-center mt-3 mb-5">
+                <MudRating ReadOnly="true" SelectedValue="(int)Math.Round(GlobalRate, 0)" Size="Size.Large" /><MudText Class="ml-2" Typo="Typo.h5">@GlobalRate</MudText>
+            </div>
+        </div>
+        <hr />
+        <p style="font-size: 18px;">@Product.Description</p>
+        <hr />
+        @if (Product.Eco)
+        {
+            <div class="d-flex">
+                <MudIconButton Class="mr-2 mb-2" Icon="fas fa-leaf" Size="Size.Small" Color="Color.Success"></MudIconButton>
+                <p class="m-0" style="font-size: 18px;">Eco</p>
+            </div>
+            <hr />
+        }
+        <MudText Align="Align.Center" Typo="Typo.h5">Reviews</MudText>
+        @if (Rates.Count > 0)
+        {
+            foreach (var rate in Rates)
+            {
+                <div class="px-2 my-2" style="border: 1px solid lightgrey; border-radius: 8px;">
+                    <div class="d-flex p-1">
+                        <div class="image p-1">
+                            <MudAvatar Image="@(rate.User.UserImage != null ? rate.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                        </div>
+                        <div class="px-3" style="display: flex; flex-direction: column; justify-content: center;">
+                            <h4 class="author_name m-0">@rate.User.FirstName @rate.User.LastName</h4>
+                            <div class="d-flex">
+                                <MudRating ReadOnly="true" SelectedValue="@rate.Rate" Size="Size.Medium" /><MudText Class="ml-2" Typo="Typo.body1">@rate.Rate,0</MudText>
+                            </div>
+                        </div>
+                        <div class="ml-auto mr-3 mt-3" style="display: flex; flex-direction: column;">
+                            <MudText Typo="Typo.body1">@rate.Date.ToString("dd/MM/yyyy")</MudText>
+                        </div>
+                    </div>
+                    <MudText Class="ml-5 mb-2" Typo="Typo.body1">@rate.Comment</MudText>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No reviews...</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@inherits EditProductDialogBAse
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer>
+            <EditForm Model="@ProductModal" OnInvalidSubmit="HandleInvalidSubmit" OnValidSubmit="EditProduct">
+                <DataAnnotationsValidator />
+                <div style="height: 73vh; overflow-y: scroll; overflow-x: hidden;">
+                    <MudGrid Class="px-3 mt-0 mb-5">
+                        <MudItem xs="12" sm="4" md="3">
+                            <MudSelect T="string" Label="Category" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.Name" SelectedValuesChanged="() => Sort(1)">
+                                @foreach (var catregory in Categories)
+                                {
+                                    <MudSelectItem T="string" Value="catregory" />
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudItem xs="12" sm="4" md="3">
+                            <MudSelect T="string" Label="SubCategory 1" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.SubCategoryOne" SelectedValuesChanged="() => Sort(2)">
+                                @foreach (var catregory in SubCategoriesOne)
+                                {
+                                    <MudSelectItem T="string" Value="catregory" />
+                                }
+                            </MudSelect>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="4" md="3">
+                            <MudSelect T="string" Label="SubCategory 2" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.SubCategoryTwo" SelectedValuesChanged="() => Sort(3)">
+                                @foreach (var catregory in SubCategoriesTwo)
+                                {
+                                    <MudSelectItem T="string" Value="catregory" />
+                                }
+                            </MudSelect>
+                        </MudItem>
+
+                        <MudItem xs="12" sm="4" md="3">
+                            <MudSelect T="string" Label="Species" Strict="true" Variant="Variant.Outlined" Format="F2" OffsetY="true" @bind-Value="ProductCategoryModal.Species" SelectedValuesChanged="() => Sort(4)">
+                                @foreach (var catregory in Species)
+                                {
+                                    <MudSelectItem T="string" Value="catregory" />
+                                }
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+
+                    <div class="row m-0">
+                        <div class="col-6">
+                            <MudTextField For="@(() => ProductModal.Title)" @bind-Value="ProductModal.Title" Class="m-0" Label="Title" Variant="Variant.Outlined"></MudTextField>
+
+                            <MudGrid Class="mt-2">
+                                <MudItem sm="12" md="6">
+                                    <MudTextField For="@(() => ProductModal.Price)" @bind-Value="ProductModal.Price" Class="m-0" Label="Price" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.AttachMoney" AdornmentColor="Color.Warning" />
+                                </MudItem>
+                                <MudItem sm="12" md="6">
+                                    <MudTextField For="@(() => ProductModal.Quantity)" @bind-Value="ProductModal.Quantity" Class="m-0" Label="Quantity" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="Kg" />
+                                </MudItem>
+                            </MudGrid>
+
+                            <MudTextField For="@(() => ProductModal.Description)" @bind-Value="ProductModal.Description" Class="mt-5" Label="Description" Variant="Variant.Outlined" T="string" Lines="15" />
+
+                            <MudSwitch T="bool" @bind-Checked="ProductModal.Eco" Class="mt-5" Label="Eco" Color="Color.Success" />
+                        </div>
+
+                        <div class="col-6" style="justify-content: center; display: flex; flex-direction: column;">
+                            <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #bdbdbd; border-radius: 4px; height: @(ProductModal.ProductImage.Image == "" ? "500px;" : "auto;");background-color: lightgray;">
+                                @if (string.IsNullOrEmpty(ProductModal.ProductImage.Image))
+                                {
+                                    <MudIcon Class="m-5" Icon="@Icons.Material.Filled.Landscape" Size="Size.Large" Title="Photo" />
+                                }
+                                else
+                                {
+                                    <img class="w-100 h-100" style="border-radius: 4px;" src="@ProductModal.ProductImage.Image" />
+                                }
+                            </div>
+                            <InputFile id="fileInput112" OnChange="UploadFiles" hidden accept=".jpg, .jpeg, .png" />
+                            <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.CloudUpload" Class="mt-3" Style="float:right;" for="fileInput112">Upload image</MudButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end align-items-center px-5">
+                    <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Cancel">Cancel</MudButton>
+                    <MudButton Class="ml-3" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Edit product</MudButton>
+                </div>
+            </EditForm>
+        </MudContainer>
+    </DialogContent>
+</MudDialog>

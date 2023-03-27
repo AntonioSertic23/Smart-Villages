@@ -1,0 +1,79 @@
+﻿@layout UserSignLayout
+@page "/"
+@inject NavigationManager NavigationManager
+@inherits HomeBase
+
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<div class="parent-container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 py-4">
+        <div class="container-fluid">
+            <div class="navbar_header">
+                <img src="./img/logo-transparent.png" />
+                <h1>Smart Villages</h1>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col home home-left-side">
+        <section id="top-contact"></section>
+        @if (LeftSignInOpened)
+        {
+            <SignIn IsLeftOpened="IsLeftOpened" OpenSignUp="OpenSignUp" GoBack="GoBackPressed" />
+        }
+        else if (LeftSignUpOpened)
+        {
+            <SignUp IsLeftOpened="IsLeftOpened" OpenSignIn="OpenSignIn" GoBack="GoBackPressed" />
+        }
+        else
+        {
+            <img class="home-img" src="./img/illustrations/DarkWatering.png" />
+            <div class="home-container container text-center">
+                <h1>Nastavi kao poljoprivrednik</h1>
+                <div class="d-grid gap-2 w-100">
+                    <button @onclick="OpenRightSignIn" class="btn" type="button">Prijava</button>
+                    <button @onclick="OpenRightSignUp" class="btn" type="button">Registracija</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col home home-right-side">
+        <section id="bottom-contact"></section>
+        @if (RightSignInOpened)
+        {
+            <SignIn IsLeftOpened="IsLeftOpened" OpenSignUp="OpenSignUp" GoBack="GoBackPressed" />
+        }
+        else if (RightSignUpOpened)
+        {
+            <SignUp IsLeftOpened="IsLeftOpened" OpenSignIn="OpenSignIn" GoBack="GoBackPressed" />
+        }
+        else
+        {
+            <img class="home-img" src="./img/illustrations/DarkNotifications.png" />
+            <div class="home-container container text-center">
+                <h1>Nastavi kao kupac</h1>
+                <div class="d-grid gap-2 w-100">
+                    <button @onclick="OpenLeftSignIn" class="btn" type="button">Prijava</button>
+                    <button @onclick="OpenLeftSignUp" class="btn" type="button">Registracija</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <footer class="footer mt-auto bg-dark">
+        <div class="container d-flex align-center justify-content-between">
+            <span class="text-white">© 2020 Copyright: SmartVillages.com</span>
+
+            <div class="social_media">
+                <MudIconButton Icon="@Icons.Custom.Brands.Facebook" Color="Color.Primary"></MudIconButton>
+                <MudIconButton Icon="@Icons.Custom.Brands.Twitter" Color="Color.Info"></MudIconButton>
+                <MudIconButton Icon="@Icons.Custom.Brands.Pinterest" Color="Color.Secondary"></MudIconButton>
+                <MudIconButton Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Info"></MudIconButton>
+                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary"></MudIconButton>
+            </div>
+        </div>
+    </footer>
+</div>

@@ -1,0 +1,25 @@
+﻿@inherits MainLayoutBase
+
+<MudThemeProvider />
+<MudDialogProvider FullWidth="true" CloseButton="true" />
+<MudSnackbarProvider />
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main" style="width: calc(100vw - 82px);">
+        <div class="top-row px-4">
+            <MudMenu Label="@FullName" Variant="Variant.Filled" Color="Color.Primary" Direction="Direction.Bottom" OffsetY="true" FullWidth="true" EndIcon="@Icons.Material.Filled.ArrowDropDown">
+                <MudMenuItem Link="/profile/0">Profile</MudMenuItem>
+                @*<MudMenuItem Link="/settings">Settings</MudMenuItem>*@
+                <MudMenuItem OnClick="Logout">Logout</MudMenuItem>
+            </MudMenu>
+        </div>
+
+        <div>
+            @Body
+        </div>
+    </div>
+</div>

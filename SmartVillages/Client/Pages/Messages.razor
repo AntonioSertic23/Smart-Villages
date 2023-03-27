@@ -1,0 +1,201 @@
+﻿@page "/messages/{id}"
+@layout MainLayout
+@inherits MessagesBase
+
+<div class="messages_container row m-0">
+
+    <div class="messages_chatlist col-lg-5 col-xxl-3 container-fluid p-0">
+
+        <div class="messages_chatlist_top d-flex justify-content-between p-3">
+            <h3 class="m-0">Messages @*<span class="unread_messages ml-2">5</span>*@ </h3>
+            @*
+            <div class="d-flex align-center">
+                <MudIconButton Class="p-0" Color="Color.Primary" Size="Size.Medium" Icon="@Icons.Material.Filled.AddBox"></MudIconButton>
+                <p class="mb-0 ml-1">New Chat</p>
+            </div>
+            *@
+        </div>
+        @*
+        <div class="messages_chatlist_filters d-flex p-3">
+            <MudTextField Class="m-0" @bind-Value="@TextValue" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" Immediate="true" />
+            <MudButton Class="ml-3" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary"><MudIcon Icon="@Icons.Material.Filled.FilterAlt" /></MudButton>
+        </div>
+        *@
+        <div class="p-3" style="overflow: scroll; max-height: calc(100vh - 176px);">
+            @if (!LoadingMessages)
+            {
+                <div class="w-100 h-100 d-flex align-center justify-content-center">
+                    <div class="lds-facebook">
+                        <div>
+                        </div>
+                        <div>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                @if(AllMessagesList.Count > 0)
+                {
+                    @foreach (var message in AllMessagesList)
+                    {
+                        <div class="messages_chat_box d-flex @(message.LastIsSeen ? "seen" : "notseen")" @onclick="() => OpenMessage(message)">
+                            <div class="image p-1">
+                                <MudAvatar Image="@(message.User.UserImage != null ? message.User.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                            </div>
+                            <div class="message px-3">
+                                <h4 class="author_name m-0">@message.User.FirstName @message.User.LastName</h4>
+                                <p class="author_last_message m-0 text-muted">@message.MessageContent</p>
+                            </div>
+                            <div class="settings_and_unread">
+                                @*
+                                <div class="messages_settings">
+                                    <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Small" Dense="true" Direction="Direction.Left" OffsetX="true">
+                                        <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
+                                        <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
+                                        <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
+                                    </MudMenu>
+                                </div>
+                                *@
+                                @if (message.UnreadMessages != 0)
+                                {
+                                    <div class="unread_messages">
+                                        <span class="">@message.UnreadMessages</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No messages!</p>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="messages_chat col-lg-7 col-xxl-9 p-0">
+        @if (MessageOpened)
+        {
+            <div class="row m-0 top_track">
+                <div class="col top_track_left">
+                    <MudAvatar Image="@(OpenedUser.UserImage != null ? OpenedUser.UserImage.Image : "/img/default.png")" Size="Size.Large" Class="ma-2" />
+                    <h4>@OpenedUser.FirstName @OpenedUser.LastName</h4>
+                </div>
+
+                @*
+                <div class="col d-flex justify-content-end">
+                    <div class="messages_settings d-flex align-center">
+                        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Medium" Dense="true" Direction="Direction.Left" OffsetX="true">
+                            <MudMenuItem Link="/userprofile">Obriši</MudMenuItem>
+                            <MudMenuItem Link="/fetchdata">Označi kao pročitano</MudMenuItem>
+                            <MudMenuItem Link="/fetchdata">Prijavi</MudMenuItem>
+                        </MudMenu>
+                    </div>
+                </div>
+                *@
+            </div>
+
+            <div class="chat_container px-5 py-2">
+                @if (LoadingMessage)
+                {
+                    <div class="w-100 h-100 d-flex align-center justify-content-center">
+                        <div class="lds-facebook">
+                            <div>
+                            </div>
+                            <div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @foreach (var message in DirectMessagesList)
+                {
+                    if (message.PersonOne.Email == User.Email)
+                    {
+                        <div class="message_right w-100 d-flex align-center">
+                            <div class="message_left_container d-flex row ml-auto ma-0">
+                                <div class="col-11 p-0 pr-3">
+                                    <div class="chat_send_message d-flex align-center p-3 ml-auto">
+                                        <p class="ma-0">@message.MessageContent</p>
+                                    </div>
+                                    <div class="w-75 ml-auto">
+                                        <div class="chat_send_date text-end">
+                                            <p class="ma-0 text-muted">@message.Date</p>
+                                        </div>
+                                        <div class="chat_send_options">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
+                                    <MudAvatar Image="@(User.UserImage != null ? User.UserImage.Image : "/img/default.png")" Size="Size.Medium" Class="" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="message_left w-100 d-flex align-center">
+                            <div class="message_left_container d-flex row ma-0">
+                                <div class="col-1 pa-0 d-flex align-end justify-content-center mb-5">
+                                    <MudAvatar Image="@(OpenedUser.UserImage != null ? OpenedUser.UserImage.Image : "/img/default.png")" Size="Size.Medium" Class="" />
+                                </div>
+                                <div class="col-11 p-0 pl-3">
+                                    <div class="chat_send_message d-flex align-center p-3 col-sm-12">
+                                        <p class="ma-0">@message.MessageContent</p>
+                                    </div>
+                                    <div class="w-75">
+                                        <div class="chat_send_date">
+                                            <p class="ma-0 text-muted">@message.Date</p>
+                                        </div>
+                                        <div class="chat_send_options">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div id="bottom_message"></div>
+            </div>
+
+            <div class="bottom_sender d-flex px-5 py-3">
+                <div class="sender_input w-100 mr-5">
+                    <MudTextField Class="mt-0" @bind-Value="MessageToSend" Placeholder="Write your message.." Variant="Variant.Outlined"></MudTextField>
+                </div>
+
+                <div class="sender_button">
+                    <MudButton Class="h-100" Size="Size.Large" Variant="Variant.Filled" Color="Color.Primary" OnClick="SendMessage"><MudIcon Icon="@Icons.Material.Rounded.Send" /></MudButton>
+                </div>
+            </div>
+        }
+        else
+        {
+    <div class="d-flex w-100 h-100 align-center justify-content-center">
+        <h3>To open messages click on one of the cards on left side.</h3>
+    </div>
+        }
+    </div>
+
+</div>
+
+@*
+        Primjer dropdowna
+    <select class="form-control selectpicker" @bind="User.Id">
+        <option>--select--</option>
+        @foreach (var item in Users)
+        {
+            <option value="@item.Id">@item.FirstName</option>
+            // Blazor needs to know what values it binds to!
+        }
+    </select>
+    <button class="btn btn-danger" @onclick="Prikazi">Ae</button>
+*@
