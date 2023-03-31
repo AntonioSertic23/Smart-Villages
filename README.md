@@ -1,10 +1,10 @@
 # SmartVillages
 
-## Projekt za završni rad koji služi kao lokalna digitalna tržnica
+## Projekt za završni rad koji služi korisnicima i poljoprivrednicima kao digitalna tržnica
 
 Web aplikacija Smart Villages je veći projekt koji je rađen upotpunosti samostalno u sklopu faksa. Projekt je predan kao završni rad te je kao takav bio i tretiran od samog početka. Od osmišljavanja dizajna i svih funkcionalnosti aplikacije do dizajna baze podataka.
 
-Svrha aplikacije je da prodavači mogu dodavati svoje domaće proizvode na takozvanu "Tržnicu" gdje potom kupci mogu naručivati iste. Nakon što proizvod bude označen kao dostavljen kupcac ga može ocijeniti i komentirati. Također integrirao je i real-time slanje poruka između kupaca i prodavača.
+Svrha aplikacije je da prodavači mogu dodavati svoje domaće proizvode na takozvanu "Tržnicu" gdje potom kupci mogu naručivati iste. Nakon što proizvod bude označen kao dostavljen kupac ga može ocijeniti i komentirati. Također integrirao je i real-time slanje poruka između kupaca i prodavača.
 
 Aplikacija sadrži jednostavan proces _prijave/registracije_ za koje je potrebna verifikacija mailom. Integrirano je _real-time slanje poruka_ uz opcije pročitana/nepročitana.
 
@@ -43,7 +43,7 @@ te u tablicu `Places` unosimo neko mjesto po želji:
 | --- | ---------- | ---------- |
 | 1   | Virovitica | 33000      |
 
-te na kraju pokrećemo aplikaciju tako da nam je `Server` jedini `Startup Project`. To je zato jer server projekt ima referencu na klijent projekt i vrte se na istom portu. Potom registriramo korisnika ili poljoprivrednika prateći uputstva.
+te na kraju pokrećemo aplikaciju tako da nam je `Server` jedini `Startup Project`. To je zato jer `Server` projekt ima referencu na `Klijent` projekt i "vrte" se na istom portu. Potom registriramo korisnika ili poljoprivrednika prateći uputstva.
 
 ---
 
