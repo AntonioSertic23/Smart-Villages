@@ -1,73 +1,73 @@
 # SmartVillages
 
-## Web aplikacija digitalna tržnica
+## Web Application for Digital Marketplace
 
-Web aplikacija Smart Villages je veći projekt koji je rađen upotpunosti samostalno u sklopu faksa. Projekt je predan kao završni rad te je kao takav bio i tretiran od samog početka. Od osmišljavanja dizajna i svih funkcionalnosti aplikacije do dizajna baze podataka.
+The SmartVillages web application is a major project done entirely independently as part of college studies. It was submitted as a final thesis and treated as such from the very beginning. From designing the application and all its functionalities to designing the database.
 
-Svrha aplikacije je da prodavači mogu dodavati svoje domaće proizvode na takozvanu "Tržnicu" gdje potom kupci mogu naručivati iste. Nakon što proizvod bude označen kao dostavljen kupac ga može ocijeniti i komentirati. Također integrirao je i real-time slanje poruka između kupaca i prodavača.
+The purpose of the application is to allow sellers to add their homemade products to the "Marketplace", where customers can then place orders for them. Once the product is marked as delivered, the customer can rate and comment on it. The application also integrates real-time messaging between customers and sellers.
 
-### Tehnologije korištene za izradu:
+### Technologies used in development:
 
-- **Blazor - WebAssembly** u ASP.NET Core-u
-- **Entity Framework Core** za kreiranje i migracije baze podataka
-- **SignalR** za slanje real-time obavijesti i poruka
-- **MudBlazor** - Blazor Component Library za dizajn
-- **Microsoft SQL Server** za rad sa bazom podataka
+- **Blazor - WebAssembly** in ASP.NET Core
+- **Entity Framework Core** for creating and migrating the database
+- **SignalR** for sending real-time notifications and messages
+- **MudBlazor** - Blazor Component Library for design
+- **Microsoft SQL Server** for working with the database
 
 [![My Skills](https://skills.thijs.gg/icons?i=wasm,dotnet,js,bootstrap,sqlite)](https://skills.thijs.gg)
 
-Aplikacija sadrži jednostavan proces _prijave/registracije_ za koje je potrebna verifikacija mailom. Integrirano je _real-time slanje poruka_ uz opcije pročitana/nepročitana.
+The application includes a simple _sign-in/registration_ process with email verification. Real-time messaging is integrated with read/unread options.
 
 ---
 
-### Kada se poljoprivrednik prijavi u aplikaciju može:
+### When a farmer logs in to the application, they can:
 
-- pretražiti i sortirati tržnicu
-- dodavati nove proizvode u tržnicu
-- naručiti proizvode drugih poljoprivrednika iz tržnice
-- pregledati košaricu
-- ažurirati i obrisati svoje proizvode
-- pregledati svoje narudžbe, narudžbe drugih ljudi za njegove proizvode i završene naružbe
-- postaviti narudžbe svojih proizvoda kao dostavljene
-- za svoje završene narudžbe može dati ocjenu i komentar
-- slati poruke kupcima njegovih proizvoda
-- pregledati svoj profil
-- izmjeniti korisničke podatke za svoj profil
+- Search and sort the marketplace.
+- Add new products to the marketplace.
+- Order products from other farmers in the marketplace.
+- View their shopping cart.
+- Update and delete their products.
+- View their orders, orders for their products from other customers, and completed orders.
+- Mark their product orders as delivered.
+- Provide ratings and comments for completed orders.
+- Send messages to customers who ordered their products.
+- View their profile.
+- Modify user data for their profile.
 
-### Kada se obićan korisnik prijavi u aplikaciju može:
+### When a regular user logs in to the application, they can:
 
-- pretražiti i sortirati tržnicu
-- naručiti proizvode iz tržnice
-- pregledati košaricu
-- pregledati svoje u trijeku i završene narudžbe
-- za svoje završene narudžbe može dati ocjenu i komentar
-- slati poruke prodavačima proizvoda
-- pregledati svoj profil
-- izmjeniti korisničke podatke za svoj profil
+- Search and sort the marketplace.
+- Order products from the marketplace.
+- View their shopping cart.
+- View their ongoing and completed orders.
+- Provide ratings and comments for completed orders.
+- Send messages to sellers of the products they ordered.
+- View their profile.
+- Modify user data for their profile.
 
 ---
 
-### Pokretanje projekta
+### Project Setup
 
-Potrebno je kreirati bazu i pokrenuti migracije na nju preko `Package Manager Console` gdje pokrećemo sljedeću liniju koda.
+Create the database and run migrations by using `Package Manager Console` and executing the following command:
 
 ```sh
 update-database
 ```
 
-Zatim u tablicu `UserTypes` unosimo:
+Then, insert the following data into the `UserTypes` table:
 
 | UserTypeId | UserTypeName    |
 | ---------- | --------------- |
 | 1          | Korisnik        |
 | 2          | Poljoprivrednik |
 
-te u tablicu `Places` unosimo neko mjesto po želji:
+Also, insert a location of your choice into the `Places` table:
 
 | Id  | Name       | PostalCode |
 | --- | ---------- | ---------- |
 | 1   | Virovitica | 33000      |
 
-- Kako bi se izbjeglo ovakvo unošenje podataka u tablice, trebalo bi napraviti sql datoteku sa pripremljenim podacima za bazu (_Quick Start_) u budućnosti.
+- To avoid manually entering data into the tables, a SQL file with prepared data for the database (_Quick Start_) should be created in the future.
 
-Na kraju pokrećemo aplikaciju tako da nam je `Server` jedini `Startup Project`. To je zato jer `Server` projekt ima referencu na `Klijent` projekt i "vrte" se na istom portu. Potom registriramo korisnika ili poljoprivrednika prateći uputstva.
+Finally, run the application with the `Server` as the only `Startup Project`. This is because the `Server` project has a reference to the `Client` project, and they run on the same port. Then, register as either a user or a farmer following the instructions.
