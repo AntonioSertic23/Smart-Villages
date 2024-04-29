@@ -14,7 +14,7 @@ The purpose of the application is to allow sellers to add their homemade product
 - **MudBlazor** - Blazor Component Library for design
 - **Microsoft SQL Server** for working with the database
 
-[![My Skills](https://skills.thijs.gg/icons?i=wasm,dotnet,js,bootstrap,sqlite)](https://skills.thijs.gg)
+[![My Skills](https://skillicons.dev/icons?i=wasm,dotnet,js,bootstrap,sqlite)](https://skillicons.dev)
 
 The application includes a simple _sign-in/registration_ process with email verification. Real-time messaging is integrated with read/unread options.
 
